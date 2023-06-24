@@ -1,6 +1,6 @@
 {
 	"name": "rnbokit",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -51,8 +51,8 @@
 	"type": "module",
 	"dependencies": {
 		"@rnbo/js": "^1.1.2"
-    },
-    "repository": {
+	},
+	"repository": {
 		"type": "git",
 		"url": "https://github.com/SanderNotenbaert/RNBOKit"
 	},
@@ -65,5 +65,6 @@
 		"Cycling74",
 		"RNBO",
 		"RNBO~",
-		"RNBOkit"]
+		"RNBOkit"
+	]
 }
