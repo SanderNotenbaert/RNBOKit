@@ -1,6 +1,6 @@
 <script>
-	import RadioGroup from '$lib/UIcomponents/Radio/RadioGroup.svelte';
-	import RadioItem from '$lib/UIcomponents/Radio/RadioItem.svelte';
+	import RadioGroup from '$lib/UIcomponents/RadioGroup.svelte';
+	import RadioItem from '$lib/UIcomponents/RadioItem.svelte';
 	import AudioDropIn from './AudioDropIn.svelte';
 	import MicIn from './MicIn.svelte';
 

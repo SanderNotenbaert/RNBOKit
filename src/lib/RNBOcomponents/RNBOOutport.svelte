@@ -1,5 +1,5 @@
 <script>
-	import ProgressBar from '$lib/UIcomponents/ProgressBar/ProgressBar.svelte';
+	import ProgressBar from '$lib/UIcomponents/ProgressBar.svelte';
 	/** @type {import ('@rnbo/js').MessageInfo} */
 	export let outport;
 

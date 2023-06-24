@@ -114,8 +114,8 @@ Here is the list of available RNBO components, to be used as slots of the `<RNBO
 
 ```javascript
 import { RNBOParam } from 'rnbokit'; //required props: {parameters}
-import { RNBOInport } from 'rnbokit'; //required props: {inport} {device}
-import { RNBOOutport } from 'rnbokit'; //required props: {outport} {device}
+import { RNBOInport } from 'rnbokit'; //required props: {inport} {device} - optional props: {min}, {max}
+import { RNBOOutport } from 'rnbokit'; //required props: {outport} {device} - optional props: {min}, {max}
 import { RNBOInlet } from 'rnbokit'; //required props: {inlet} {device} - optional props: {mode} options: 'mic', 'dropIn'
 import { RNBOMidiIn } from 'rnbokit'; //required props: {port} {device} - optional props: {mode} options: 'xy', 'external'
 //not working, RNBO bug

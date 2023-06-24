@@ -1,6 +1,5 @@
 <script>
-	import '$lib/RNBO.css';
-	// import RangeSlider from '../UIcomponents/RangeSlider/RangeSlider.svelte';
+	import RangeSlider from '../UIcomponents/RangeSlider.svelte';
 	import { TimeNow, MessageEvent } from '@rnbo/js';
 
 	/** @type {import ('@rnbo/js').MessageInfo} */
@@ -25,22 +24,6 @@
 			<div class="RNBOval">{value} / {max}</div>
 		</div>
 		<p>{inport.meta.slice(1, -1)}</p>
-		<div>
-			<!-- <RangeSlider name="range-slider" bind:value={value[0]} {min} {max} step={0.01} /> -->
-
-			<input
-				type="range"
-				name="range-slider"
-				class="RNBOslider"
-				aria-label={''}
-				{min}
-				{max}
-				step={0.01}
-				bind:value={value[0]}
-				on:click
-				on:change
-				on:blur
-			/>
-		</div>
+		<RangeSlider name="range-slider" bind:value={value[0]} {min} {max} step={0.01} />
 	</div>
 {/if}

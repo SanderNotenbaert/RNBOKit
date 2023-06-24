@@ -2,8 +2,9 @@
 	import { MIDIEvent, TimeNow } from '@rnbo/js';
 	import XyMidiIn from './XYMidiIn.svelte';
 	import ExtMidiIn from './ExtMidiIn.svelte';
-	import RadioGroup from '$lib/UIcomponents/Radio/RadioGroup.svelte';
-	import RadioItem from '$lib/UIcomponents/Radio/RadioItem.svelte';
+	import RadioGroup from '$lib/UIcomponents/RadioGroup.svelte';
+	import RadioItem from '$lib/UIcomponents/RadioItem.svelte';
+
 	/** type {number} - the MIDI port index*/
 	export let port = 0;
 	/** @type {import ('@rnbo/js').Device} */

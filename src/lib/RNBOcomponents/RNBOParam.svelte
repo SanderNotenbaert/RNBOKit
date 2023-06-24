@@ -1,7 +1,7 @@
 <script>
-	import RangeSlider from '$lib/UIcomponents/RangeSlider/RangeSlider.svelte';
-	import RadioGroup from '$lib/UIcomponents/Radio/RadioGroup.svelte';
-	import RadioItem from '$lib/UIcomponents/Radio/RadioItem.svelte';
+	import RangeSlider from '$lib/UIcomponents/RangeSlider.svelte';
+	import RadioGroup from '$lib/UIcomponents/RadioGroup.svelte';
+	import RadioItem from '$lib/UIcomponents/RadioItem.svelte';
 	/** @type {import ('@rnbo/js').Parameter} */
 	export let parameter;
 	/** @type {number} */

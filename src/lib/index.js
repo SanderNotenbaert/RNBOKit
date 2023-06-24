@@ -4,7 +4,6 @@ export { default as RNBOParam } from './RNBOcomponents/RNBOParam.svelte';
 export { default as RNBOMidiIn } from './RNBOcomponents/RNBOMidiIn.svelte';
 // export { default as RNBOMidiOut } from './RNBOcomponents/RNBOMidiOut.svelte';
 export { default as RNBOInlet } from './RNBOcomponents/RNBOInlet.svelte';
-export { default as RNBOOutlet } from './RNBOcomponents/RNBOOutlet.svelte';
 export { default as RNBOInport } from './RNBOcomponents/RNBOInport.svelte';
 export { default as RNBOOutport } from './RNBOcomponents/RNBOOutport.svelte';
 
