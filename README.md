@@ -5,6 +5,7 @@ An easily extendable Sveltekit component library for seamlessly importing Cyclin
 ## Disclaimer
 
 ~ warning #1: this package is still work in progress ~
+
 ~ warning #2: this is my very first library & open source project, mistakes are bound to be made, so please do correct me on any mistake or practice I can do better! ~
 
 ## Getting Started
