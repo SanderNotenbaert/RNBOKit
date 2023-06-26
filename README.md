@@ -1,3 +1,5 @@
+<img width="491" alt="Screenshot 2023-06-26 at 22 29 43" src="https://github.com/SanderNotenbaert/RNBOKit/assets/34664737/5c54599e-fb9f-4131-a28a-ba4993f2f064">
+
 # RNBOKit
 
 An easily extendable Sveltekit component library for seamlessly importing Cycling74's Max RNBO~ patches into your Svelte app.
