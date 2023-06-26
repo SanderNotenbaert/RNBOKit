@@ -182,7 +182,7 @@
 				<!-- handle all event outlets -->
 				{#if outports.length > 0}
 					<div class="RNBOsection">
-						<h2>outport events</h2>
+						<h2>message outlets</h2>
 						{#each outports as outport}
 							<RNBOOutport {outport} {device} />
 						{/each}
