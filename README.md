@@ -175,61 +175,62 @@ Here is a look at how the RNBO component's default slot looks like, for inspirat
 
 ```svelte
 <RNBO let:path let:device let:midiInports let:inlets let:inports let:parameters let:outports>
-<div class="RNBOsection">
-	<!-- use the json file name as header -->
-	<h1>{path.split('/').pop().replace('.json', '')}</h1>
+	<div class="RNBOsection">
+		<!-- use the json file name as header -->
+		<h1>{path.split('/').pop().replace('.json', '')}</h1>
 
-	<!-- create input for each MIDI input port -->
-	{#if midiInports.length > 0}
-		<div class="RNBOsection">
-			<h2>MIDI inputs</h2>
-			{#each midiInports as port}
-				<RNBOMidiIn {port} {device} />
-			{/each}
-		</div>
-	{/if}
+		<!-- create input for each MIDI input port -->
+		{#if midiInports.length > 0}
+			<div class="RNBOsection">
+				<h2>MIDI inputs</h2>
+				{#each midiInports as port}
+					<RNBOMidiIn {port} {device} />
+				{/each}
+			</div>
+		{/if}
 
-	<!-- handle all signal inlets -->
-	{#if inlets.length > 0}
-		<div class="RNBOsection">
-			<h2>signal inlets</h2>
-			{#each inlets as inlet}
-				<RNBOInlet {inlet} {device} />
-			{/each}
-		</div>
-	{/if}
+		<!-- handle all signal inlets -->
+		{#if inlets.length > 0}
+			<div class="RNBOsection">
+				<h2>signal inlets</h2>
+				{#each inlets as inlet}
+					<RNBOInlet {inlet} {device} />
+				{/each}
+			</div>
+		{/if}
 
-	<!-- handle all event inlets -->
-	{#if inports.length > 0}
-		<div class="RNBOsection">
-			<!-- list only the event inlets (skip signal ones) -->
-			<h2>message inlets</h2>
-			{#each inports as inport}
-				<RNBOInport {inport} {device} />
-			{/each}
-		</div>
-	{/if}
+		<!-- handle all event inlets -->
+		{#if inports.length > 0}
+			<div class="RNBOsection">
+				<!-- list only the event inlets (skip signal ones) -->
+				<h2>message inlets</h2>
+				{#each inports as inport}
+					<RNBOInport {inport} {device} />
+				{/each}
+			</div>
+		{/if}
 
-	<!-- handle all parameters -->
-	{#if parameters.length > 0}
-		<div class="RNBOsection">
-			<h2>parameters</h2>
-			{#each parameters as parameter}
-				<RNBOParam {parameter} />
-			{/each}
-		</div>
-	{/if}
+		<!-- handle all parameters -->
+		{#if parameters.length > 0}
+			<div class="RNBOsection">
+				<h2>parameters</h2>
+				{#each parameters as parameter}
+					<RNBOParam {parameter} />
+				{/each}
+			</div>
+		{/if}
 
-	<!-- handle all event outlets -->
-	{#if outports.length > 0}
-		<div class="RNBOsection">
-			<h2>outport events</h2>
-			{#each outports as outport}
-				<RNBOOutport {outport} {device} />
-			{/each}
-		</div>
-	{/if}
-</div>
+		<!-- handle all event outlets -->
+		{#if outports.length > 0}
+			<div class="RNBOsection">
+				<h2>outport events</h2>
+				{#each outports as outport}
+					<RNBOOutport {outport} {device} />
+				{/each}
+			</div>
+		{/if}
+	</div>
+</RNBO>
 ```
 
 ## TODO
