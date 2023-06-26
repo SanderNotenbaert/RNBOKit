@@ -91,10 +91,10 @@ Here is the full list of all available variables:
 <RNBO let:patcher <!-- type: IPatcher - represents the json exported from Max -->
 	let:device <!-- type: Device          - the device object, check RNBO js documentation  -->
 	let:dependencies <!-- type: IDependencies - represents the json with dependencies of the patch, check RNBO js documentation -->
+	let:parameters <!-- type: Parameter[]     - an array containing all RNBO parameters, check RNBO js documentation -->
 	let:midiInports <!-- type: Array<Number>   - an array representing each port as an index number -->
 	let:inlets <!-- type: MessageInfo[]   - an array of objects containing info on each signal inlet- -->
 	let:inports <!-- type: MessageInfo[]   - an array of objects containing info on each message inlet -->
-	let:parameters <!-- type: Parameter[]     - an array containing all RNBO parameters, check RNBO js documentation -->
 	let:outports <!-- type: MessageInfo[]   - an array of objects containing info on each message outlet -->
 	>
 	<!-- do something with it here -->
