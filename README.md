@@ -62,7 +62,7 @@ to open different RNBO patch exports, give the exports different names, and use 
 
 ## extending with custom slots
 
-You can customize how parameters or messages are handled by adding your own components in the RNBO tag. You can pass information from the RNBO component down to the child components by using Svelte's `let:` syntax. The available objects are the `patcher` file (IPatcher), `dependencies` (IDependencies) `context` (AudioContext), `device` (Device), or `parameters` (Parameter[]). You can find more information on these in the [RNBO JS documentation](https://rnbo.cycling74.com/js)
+You can customize how parameters or messages are handled by adding your own components in the RNBO tag. You can pass information from the RNBO component down to the child components by using Svelte's `let:` syntax. Some available objects are the `patcher` file (IPatcher), `dependencies` (IDependencies) `context` (AudioContext), `device` (Device), or `parameters` (Parameter[]). You can find more information on these in the [RNBO JS documentation](https://rnbo.cycling74.com/js)
 
 ```svelte
 <script>
@@ -78,6 +78,26 @@ You can customize how parameters or messages are handled by adding your own comp
 		<!-- or use the included UI components -->
 		<RNBOParam {parameter} />
 	{/each}
+</RNBO>
+```
+
+Here is the full list of all available variables:
+
+```svelte
+<script>
+	import { RNBO } from 'rnbokit';
+</script>
+
+<RNBO let:patcher <!-- type: IPatcher - represents the json exported from Max -->
+	let:device <!-- type: Device          - the device object, check RNBO js documentation  -->
+	let:dependencies <!-- type: IDependencies - represents the json with dependencies of the patch, check RNBO js documentation -->
+	let:midiInports <!-- type: Array<Number>   - an array representing each port as an index number -->
+	let:inlets <!-- type: MessageInfo[]   - an array of objects containing info on each signal inlet- -->
+	let:inports <!-- type: MessageInfo[]   - an array of objects containing info on each message inlet -->
+	let:parameters <!-- type: Parameter[]     - an array containing all RNBO parameters, check RNBO js documentation -->
+	let:outports <!-- type: MessageInfo[]   - an array of objects containing info on each message outlet -->
+	>
+	<!-- do something with it here -->
 </RNBO>
 ```
 
@@ -171,7 +191,7 @@ The default styling is done with the internal RNBO.css stylesheet. If you want t
 
 ## Defaults
 
-Here is a look at how the RNBO component's default slot looks like, for inspiration:
+Here is what it could look like if you'd recreate the RNBO component's default slot, for inspiration:
 
 ```svelte
 <RNBO let:path let:device let:midiInports let:inlets let:inports let:parameters let:outports>
