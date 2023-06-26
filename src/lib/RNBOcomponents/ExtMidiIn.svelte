@@ -1,6 +1,6 @@
 <script>
-	import RadioGroup from '$lib/UIcomponents/Radio/RadioGroup.svelte';
-	import RadioItem from '$lib/UIcomponents/Radio/RadioItem.svelte';
+	import RadioGroup from '$lib/UIcomponents/RadioGroup.svelte';
+	import RadioItem from '$lib/UIcomponents/RadioItem.svelte';
 	/** @type {MIDIAccess|null|false} */
 	let midi = null; // global MIDIAccess object
 	/**@type {MIDIInputMap|null} */
@@ -40,7 +40,7 @@
 	 * set the input port when selected
 	 */
 	function setPort() {
-		if (!inports || !port) return;
+		if (inports === null || port === null) return;
 
 		// @ts-ignore - ts getting their types wrong...
 		inport = [...inports][port];

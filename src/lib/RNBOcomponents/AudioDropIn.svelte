@@ -1,7 +1,12 @@
 <script>
 	//A file drop in/media player for audio
-	//TODO: handle multiple files and only allow audio files
-	import FileDropzone from '../UIcomponents/FileDropzone/FileDropzone.svelte';
+	import { flip } from 'svelte/animate';
+	import { crossfade } from 'svelte/transition';
+	const [send, receive] = crossfade({
+		duration: (d) => Math.sqrt(d * 200)
+	});
+
+	import FileDropzone from '../UIcomponents/FileDropzone.svelte';
 
 	/** @type {AudioContext} */
 	export let context;
@@ -25,11 +30,11 @@
 
 		for (const audioElement of audioElements) {
 			if (audioElement !== e.target) {
-				console.log('pause');
+				// console.log('pause');
 				audioElement.pause();
 				continue;
 			}
-			console.log('connect');
+			// console.log('connect');
 			current = audioElement;
 		}
 		try {
@@ -57,13 +62,10 @@
 	 */
 	function removeFile(index) {
 		if (!files) return;
-		console.log(files);
-		console.log(index);
 		audioElements = [];
 
 		files.splice(index, 1);
 		files = files;
-		console.log(files);
 		if (files.length === 0) {
 			files = [];
 			audioElements = [];
@@ -75,21 +77,51 @@
 	{#if files.length === 0}
 		<FileDropzone name="audio files" on:change={loadFiles} multiple accept="audio/*" />
 	{:else}
-		{#each files as file, i}
-			<button
-				type="button"
-				class="RNBObtn"
-				on:click={() => removeFile(i)}
-				on:keydown={() => removeFile(i)}
+		{#each files as file, i (file)}
+			<div
+				class="RNBOsection RNBOaudio"
+				in:receive={{ key: file }}
+				out:send={{ key: file }}
+				animate:flip={{ duration: 200 }}
 			>
-				x
-			</button>
-			<audio
-				src={URL.createObjectURL(file)}
-				bind:this={audioElements[i]}
-				on:play={onPlay}
-				controls
-			/>
+				<p class="RNBOtext">{file.name}</p>
+				<audio
+					src={URL.createObjectURL(file)}
+					bind:this={audioElements[i]}
+					on:play={onPlay}
+					controls
+				/>
+				<button
+					type="button"
+					class="RNBObtn RNBOclose"
+					on:click={() => removeFile(i)}
+					on:keydown={() => removeFile(i)}
+				>
+					x
+				</button>
+			</div>
 		{/each}
 	{/if}
 </div>
+
+<style>
+	.RNBOclose {
+		position: absolute;
+		top: -0.5rem;
+		right: -0.5rem;
+		padding-top: 0.2rem;
+		padding-bottom: 0.2rem;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		cursor: pointer;
+		border-radius: var(--local-rounded-base);
+		border-style: none;
+		background-color: rgb(var(--local-accent-color));
+	}
+	.RNBOaudio {
+		position: relative;
+		display: inline-block;
+		padding: 0.5rem;
+		margin: 0.5rem;
+	}
+</style>

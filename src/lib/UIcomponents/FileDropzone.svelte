@@ -4,13 +4,14 @@
 	let dragOver = false;
 </script>
 
-<div class="RNBOdropzone" class:opacity-50={$$restProps.disabled} data-testid="file-dropzone">
+<div class="RNBOdropzone" data-testid="file-dropzone">
 	<!-- Input: File (hidden) -->
 	<!-- NOTE: keep `bind:files` here, unlike FileButton -->
 	<input
 		bind:files
 		type="file"
 		{name}
+		{...$$restProps}
 		class="RNBOdropzone-input"
 		class:RNBOdrag={dragOver}
 		on:dragenter={() => {
@@ -67,6 +68,11 @@
 	}
 	.RNBOdropzone:hover {
 		background-color: rgba(var(--local-accent-color), 0.2);
+		transition: var(--local-animation) var(--local-animation-duration);
+		transition-timing-function: var(--local-animation-function);
+	}
+	.RNBOdropzone:active {
+		background-color: rgba(var(--local-accent-color), 0.5);
 		transition: var(--local-animation) var(--local-animation-duration);
 		transition-timing-function: var(--local-animation-function);
 	}

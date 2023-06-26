@@ -37,11 +37,9 @@
 
 	/** @type {import ('@rnbo/js').Parameter[]} */
 	export let parameters = [];
-	let numParameters = 0;
 
 	/** @type {import ('@rnbo/js').MessageInfo[]} */
 	export let inports = [];
-	let numInports = 0;
 
 	/** @typedef {object} signalPort
 	 * @property {number} index - the port index
@@ -51,23 +49,19 @@
 	 */
 	/** @type {signalPort[]} */
 	export let inlets = [];
-	let numInlets = 0;
 
 	/** @type {Array<Number>} */
-	export let MIDIOutports = [];
-	let numMIDIOutports = 0;
+	export let midiOutports = [];
 
 	/** @type {import ('@rnbo/js').MessageInfo[]} */
 	export let outports = [];
-	let numOutports = 0;
 
 	/** @type {signalPort[]} */
 	export let outlets = [];
-	let numOutlets = 0;
 
 	/** @type {Array<Number>} */
-	export let MIDIInports = [];
-	let numMIDIInports = 0;
+	export let midiInports = [];
+
 	// set up device
 	const deviceSetup = async () => {
 		//import the patcher json dynamically!
@@ -89,27 +83,20 @@
 			device.node.connect(context.destination);
 
 			parameters = device.parameters;
-			numParameters = patcher.desc.numParameters;
 
 			inports = device.inports;
-			numInports = patcher.desc.numInputChannels;
 
 			// @ts-expect-error - desc.inlets does indeed exist
 			inlets = patcher.desc.inlets.filter((inlet) => inlet.type === 'signal');
-			numInlets = inlets.length;
 
-			MIDIInports = Array.from({ length: device.numMIDIInputPorts }, (_, i) => i + 1);
-			numMIDIInports = device.numMIDIInputPorts;
+			midiInports = Array.from({ length: device.numMIDIInputPorts }, (_, i) => i + 1);
 
 			outports = device.outports;
-			numOutports = patcher.desc.numOutputChannels;
 
 			// @ts-expect-error - desc.outlets does indeed exist
 			outlets = patcher.desc.outlets.filter((outlet) => outlet.type === 'signal');
-			numOutlets = outlets.length;
 
-			MIDIOutports = Array.from({ length: device.numMIDIOutputPorts }, (_, i) => i + 1);
-			numMIDIOutports = device.numMIDIOutputPorts;
+			midiOutports = Array.from({ length: device.numMIDIOutputPorts }, (_, i) => i + 1);
 		} else if (!patcher) {
 			throw new Error('No patcher found!');
 		}
@@ -127,43 +114,42 @@
 
 <!-- html -->
 {#if patcher && device && context}
-	<div on:click={() => context?.resume()} on:keydown={() => context?.resume()}>
+	<div
+		on:click={() => context?.resume()}
+		on:keydown={() => context?.resume()}
+		role="button"
+		tabindex="-2"
+	>
 		<slot
 			{patcher}
 			{device}
 			{path}
 			{dependencies}
-			{MIDIInports}
+			{parameters}
+			{context}
 			{inports}
 			{inlets}
-			{parameters}
 			{outports}
 			{outlets}
-			{MIDIOutports}
-			{numParameters}
-			{numInports}
-			{numInlets}
-			{numOutports}
-			{numOutlets}
-			{numMIDIOutports}
-			{numMIDIInports}
+			{midiInports}
+			{midiOutports}
 		>
 			<div class="RNBOsection">
 				<!-- use the json file name as header -->
 				<h1>{path.split('/').pop().replace('.json', '')}</h1>
 
 				<!-- create input for each MIDI input port -->
-				{#if numMIDIInports > 0}
+				{#if midiInports.length > 0}
 					<div class="RNBOsection">
 						<h2>MIDI inputs</h2>
-						{#each MIDIInports as port}
+						{#each midiInports as port}
 							<RNBOMidiIn {port} {device} />
 						{/each}
 					</div>
 				{/if}
 
 				<!-- handle all signal inlets -->
-				{#if numInlets > 0}
+				{#if inlets.length > 0}
 					<div class="RNBOsection">
 						<h2>signal inlets</h2>
 						{#each inlets as inlet}
@@ -173,7 +159,7 @@
 				{/if}
 
 				<!-- handle all event inlets -->
-				{#if numInports > 0}
+				{#if inports.length > 0}
 					<div class="RNBOsection">
 						<!-- list only the event inlets (skip signal ones) -->
 						<h2>message inlets</h2>
@@ -184,7 +170,7 @@
 				{/if}
 
 				<!-- handle all parameters -->
-				{#if numParameters > 0}
+				{#if parameters.length > 0}
 					<div class="RNBOsection">
 						<h2>parameters</h2>
 						{#each parameters as parameter}
@@ -194,7 +180,7 @@
 				{/if}
 
 				<!-- handle all event outlets -->
-				{#if numOutports > 0}
+				{#if outports.length > 0}
 					<div class="RNBOsection">
 						<h2>outport events</h2>
 						{#each outports as outport}

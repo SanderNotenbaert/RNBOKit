@@ -37,7 +37,15 @@
 <svelte:window on:mouseup={NoteOff} />
 <div class="RNBOsubcomponent" {...$$restProps}>
 	<p class="RNBOtext">click the pad to generate MIDI notes</p>
-	<div class="xy" id="group" on:mousedown={NoteOn} on:mousemove={NoteUpdate}>
+	<!-- TODO: fix accessibility roles, quick hack for now -->
+	<div
+		class="xy"
+		id="group"
+		on:mousedown={NoteOn}
+		on:mousemove={NoteUpdate}
+		on:keydown={NoteOn}
+		role="none"
+	>
 		<p class="xyval" class:text-gray-500={!isOn}>
 			note: {currentNote[0]} | velocity: {currentNote[1]}
 		</p>

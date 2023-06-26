@@ -6,8 +6,9 @@
 
 	/** @type {import ('@rnbo/js').Device} */
 	export let device;
-	/** @type {AudioContext} */
+
 	let context = device.context;
+
 	/** @typedef {object} inlet
 	 * @property {number} index - the port index
 	 * @property {string} tag - the tag

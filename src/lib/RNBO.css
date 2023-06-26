@@ -98,7 +98,7 @@ h2 {
 	/* =~= Theme Properties =~= */
 	--local-font-family: var(--theme-font-family, system-ui);
 	/* --theme-font-color-dark: 255 255 255; */
-	--local-rounded-base: var(--theme-rounded-base, 9999px);
+	--local-rounded-base: var(--theme-rounded-base, 20px);
 	--local-rounded-container: var(--theme-rounded-container, 6px);
 	--local-border-base: var(--theme-border-base, 1px);
 	/* =~= Color Properties =~= */
