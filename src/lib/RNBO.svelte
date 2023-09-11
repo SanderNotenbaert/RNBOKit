@@ -77,9 +77,7 @@
 			const dependencyFileCorrected = dependencyFile.map((dependency) => {
 				if ('file' in dependency) {
 					const newFile = path.join(dir, dependency.file);
-					return Object.assign({}, dependency, {
-						file: newFile
-					});
+					return Object.assign({}, dependency, { file: newFile });
 				}
 				return dependency;
 			});
