@@ -8,11 +8,13 @@
 	import RNBOInlet from './RNBOcomponents/RNBOInlet.svelte';
 	import RNBOMidiIn from './RNBOcomponents/RNBOMidiIn.svelte';
 	// import RNBOMidiOut from './RNBOcomponents/RNBOMidiOut.svelte';
+	import path from 'path-browserify';
 
 	/** @type {string} */
-	export let path = '/src/RNBO/patch.export.json';
+	export let dir = '/src/RNBO';
 	/** @type {string} */
-	export let dependencies = '/src/RNBO/dependencies.json';
+	export let patchName = 'patch.export';
+	const dependencies = path.format({ dir, base: 'dependencies' });
 
 	// Create AudioContext
 	/** @type {AudioContext|undefined} */
@@ -65,17 +67,28 @@
 	// set up device
 	const deviceSetup = async () => {
 		//import the patcher json dynamically!
-		patcher = await import(/* @vite-ignore */ path);
-
-		//import the dependency json dynamically!
-		dependencyFile = await import(/* @vite-ignore */ dependencies);
+		const patchPath = path.format({ dir, base: patchName });
+		patcher = await import(/* @vite-ignore */ patchPath);
 
 		if (patcher && context) {
+			//import the dependency json dynamically!
+			dependencyFile = (await import(/* @vite-ignore */ dependencies)).default;
+
+			const dependencyFileCorrected = dependencyFile.map((dependency) => {
+				if ('file' in dependency) {
+					const newFile = path.join(dir, dependency.file);
+					return Object.assign({}, dependency, {
+						file: newFile
+					});
+				}
+				return dependency;
+			});
+
 			device = await createDevice({ context, patcher });
 
 			//load dependencies if they exist
-			if (dependencyFile && dependencyFile.length) {
-				device.loadDataBufferDependencies(dependencyFile);
+			if (dependencyFileCorrected && dependencyFileCorrected.length) {
+				device.loadDataBufferDependencies(dependencyFileCorrected);
 			}
 			if (patcher.presets && patcher.presets[0]) {
 				device.setPreset(patcher.presets[0].preset);
@@ -123,7 +136,8 @@
 		<slot
 			{patcher}
 			{device}
-			{path}
+			{dir}
+			{patchName}
 			{dependencies}
 			{parameters}
 			{context}
@@ -136,7 +150,7 @@
 		>
 			<div class="RNBOsection">
 				<!-- use the json file name as header -->
-				<h1>{path.split('/').pop().replace('.json', '')}</h1>
+				<h1>{patchName}</h1>
 
 				<!-- create input for each MIDI input port -->
 				{#if midiInports.length > 0}
