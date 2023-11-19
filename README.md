@@ -96,7 +96,7 @@ Here is the full list of all available variables:
 	let:patchName <!-- type: string - the name of the patch file -->
 	let:dependencyFileCorrected <!-- type: ExternalDataInfo[] - represents the json with dependencies of the patch, check RNBO js documentation -->
 	let:parameters <!-- type: Parameter[] - an array containing all RNBO parameters, check RNBO js documentation -->
-	let:context <!-- type: AudioContext - the device object, check RNBO js documentation -->
+	let:context <!-- type: AudioContext - the audio context, see https://developer.mozilla.org/Web/API/AudioContext -->
 	let:inports <!-- type: MessageInfo[] - an array of objects containing info on each message inlet -->
 	let:inlets <!-- type: signalPort[] - an array of objects containing info on each signal inlet -->
 	let:outports <!-- type: MessageInfo[] - an array of objects containing info on each message outlet -->
