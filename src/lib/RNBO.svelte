@@ -35,7 +35,7 @@
 	let patcher = undefined;
 
 	/** @type {import ('@rnbo/js').ExternalDataInfo[]|undefined} */
-	let dependencyFile = undefined;
+	let dependencyFileCorrected = undefined;
 
 	/** @type {import ('@rnbo/js').Parameter[]} */
 	export let parameters = [];
@@ -72,9 +72,9 @@
 
 		if (patcher && context) {
 			//import the dependency json dynamically!
-			dependencyFile = (await import(/* @vite-ignore */ dependencies)).default;
+			const dependencyFile = (await import(/* @vite-ignore */ dependencies)).default;
 
-			const dependencyFileCorrected = dependencyFile.map((dependency) => {
+			dependencyFileCorrected = dependencyFile.map((dependency) => {
 				if ('file' in dependency) {
 					const newFile = path.join(dir, dependency.file);
 					return Object.assign({}, dependency, { file: newFile });
@@ -136,7 +136,7 @@
 			{device}
 			{dir}
 			{patchName}
-			{dependencies}
+			{dependencyFileCorrected}
 			{parameters}
 			{context}
 			{inports}
