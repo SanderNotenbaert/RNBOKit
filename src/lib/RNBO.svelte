@@ -1,7 +1,7 @@
 <script>
 	import './RNBO.css';
 	import { onMount } from 'svelte';
-	import { createDevice } from '@rnbo/js';
+	import { BaseDevice, createDevice } from '@rnbo/js';
 	import RNBOParam from './RNBOcomponents/RNBOParam.svelte';
 	import RNBOOutport from './RNBOcomponents/RNBOOutport.svelte';
 	import RNBOInport from './RNBOcomponents/RNBOInport.svelte';
@@ -75,11 +75,11 @@
 			const dependencyFile = (await import(/* @vite-ignore */ dependencies)).default;
 
 			dependencyFileCorrected = dependencyFile.map((dependency) => {
-				if ('file' in dependency) {
-					const newFile = path.join(dir, dependency.file);
-					return Object.assign({}, dependency, { file: newFile });
+				if (BaseDevice.bufferDescriptionHasRemoteURL(dependency)) {
+					return dependency;
 				}
-				return dependency;
+				const newFile = path.join(dir, dependency.file);
+				return Object.assign({}, dependency, { file: newFile });
 			});
 
 			device = await createDevice({ context, patcher });
