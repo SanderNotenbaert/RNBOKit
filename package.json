@@ -50,7 +50,9 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"@rnbo/js": "^1.1.2"
+		"@rnbo/js": "^1.1.2",
+		"@types/path-browserify": "^1.0.0",
+		"path-browserify": "^1.0.1"
 	},
 	"repository": {
 		"type": "git",

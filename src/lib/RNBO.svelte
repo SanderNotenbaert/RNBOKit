@@ -1,18 +1,20 @@
 <script>
 	import './RNBO.css';
 	import { onMount } from 'svelte';
-	import { createDevice } from '@rnbo/js';
+	import { BaseDevice, createDevice } from '@rnbo/js';
 	import RNBOParam from './RNBOcomponents/RNBOParam.svelte';
 	import RNBOOutport from './RNBOcomponents/RNBOOutport.svelte';
 	import RNBOInport from './RNBOcomponents/RNBOInport.svelte';
 	import RNBOInlet from './RNBOcomponents/RNBOInlet.svelte';
 	import RNBOMidiIn from './RNBOcomponents/RNBOMidiIn.svelte';
 	// import RNBOMidiOut from './RNBOcomponents/RNBOMidiOut.svelte';
+	import path from 'path-browserify';
 
 	/** @type {string} */
-	export let path = '/src/RNBO/patch.export.json';
+	export let dir = '/src/RNBO';
 	/** @type {string} */
-	export let dependencies = '/src/RNBO/dependencies.json';
+	export let patchName = 'patch.export';
+	const dependencies = path.format({ dir, base: 'dependencies' });
 
 	// Create AudioContext
 	/** @type {AudioContext|undefined} */
@@ -33,7 +35,7 @@
 	let patcher = undefined;
 
 	/** @type {import ('@rnbo/js').ExternalDataInfo[]|undefined} */
-	let dependencyFile = undefined;
+	let dependencyFileCorrected = undefined;
 
 	/** @type {import ('@rnbo/js').Parameter[]} */
 	export let parameters = [];
@@ -65,17 +67,26 @@
 	// set up device
 	const deviceSetup = async () => {
 		//import the patcher json dynamically!
-		patcher = await import(/* @vite-ignore */ path);
-
-		//import the dependency json dynamically!
-		dependencyFile = await import(/* @vite-ignore */ dependencies);
+		const patchPath = path.format({ dir, base: patchName });
+		patcher = await import(/* @vite-ignore */ patchPath);
 
 		if (patcher && context) {
+			//import the dependency json dynamically!
+			const dependencyFile = (await import(/* @vite-ignore */ dependencies)).default;
+
+			dependencyFileCorrected = dependencyFile.map((dependency) => {
+				if (BaseDevice.bufferDescriptionHasRemoteURL(dependency)) {
+					return dependency;
+				}
+				const newFile = path.join(dir, dependency.file);
+				return Object.assign({}, dependency, { file: newFile });
+			});
+
 			device = await createDevice({ context, patcher });
 
 			//load dependencies if they exist
-			if (dependencyFile && dependencyFile.length) {
-				device.loadDataBufferDependencies(dependencyFile);
+			if (dependencyFileCorrected && dependencyFileCorrected.length) {
+				device.loadDataBufferDependencies(dependencyFileCorrected);
 			}
 			if (patcher.presets && patcher.presets[0]) {
 				device.setPreset(patcher.presets[0].preset);
@@ -123,8 +134,9 @@
 		<slot
 			{patcher}
 			{device}
-			{path}
-			{dependencies}
+			{dir}
+			{patchName}
+			{dependencyFileCorrected}
 			{parameters}
 			{context}
 			{inports}
@@ -136,7 +148,7 @@
 		>
 			<div class="RNBOsection">
 				<!-- use the json file name as header -->
-				<h1>{path.split('/').pop().replace('.json', '')}</h1>
+				<h1>{patchName}</h1>
 
 				<!-- create input for each MIDI input port -->
 				{#if midiInports.length > 0}
